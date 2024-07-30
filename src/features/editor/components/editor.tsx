@@ -25,8 +25,15 @@ export const Editor = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="h-full flex-1 bg-muted" ref={containerRef}>
-        <canvas ref={canvasRef} />
+      <div className="absolute top-[68px] flex h-[calc(100%-68px)] w-full">
+        <main className="relative flex flex-1 flex-col overflow-auto bg-muted">
+          <div
+            className="h-[calc(100%-124px)] flex-1 bg-muted"
+            ref={containerRef}
+          >
+            <canvas ref={canvasRef} />
+          </div>
+        </main>
       </div>
     </div>
   );
