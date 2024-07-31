@@ -1,12 +1,11 @@
 "use client";
 
+import { BsCloudCheck } from "react-icons/bs";
 import { CiFileOn } from "react-icons/ci";
-import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 
 import {
   ChevronDown,
   Download,
-  Loader,
   MousePointerClick,
   Redo2,
   Undo2,
@@ -14,20 +13,25 @@ import {
 
 import { Logo } from "./logo";
 
-import { cn } from "@/lib/utils";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import {
   DropdownMenu,
-  DropdownMenuItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { ActiveTool } from "../types";
 
-type Props = {};
-export const Navbar = ({}: Props) => {
+interface NavbarProps {
+  activeTool: ActiveTool;
+  onChangeActiveTool: (tool: ActiveTool) => void;
+}
+
+export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
   return (
     <nav className="flex h-[68px] w-full items-center gap-x-8 border-b p-4 lg:pl-[34px]">
       <Logo />
@@ -59,8 +63,8 @@ export const Navbar = ({}: Props) => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => console.log("Select")}
-            // className={cn(activeTool === "select" && "bg-gray-100")}
+            onClick={() => onChangeActiveTool("select")}
+            className={cn(activeTool === "select" && "bg-gray-100")}
           >
             <MousePointerClick className="size-4" />
           </Button>
