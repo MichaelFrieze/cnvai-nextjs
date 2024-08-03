@@ -190,16 +190,16 @@ export type BuildEditorProps = {
   // copy: () => void;
   // paste: () => void;
   canvas: fabric.Canvas;
-  // fillColor: string;
-  // strokeColor: string;
-  // strokeWidth: number;
-  // selectedObjects: fabric.Object[];
+  fillColor: string;
+  strokeColor: string;
+  strokeWidth: number;
+  selectedObjects: fabric.Object[];
   // strokeDashArray: number[];
   // fontFamily: string;
   // setStrokeDashArray: (value: number[]) => void;
-  // setFillColor: (value: string) => void;
-  // setStrokeColor: (value: string) => void;
-  // setStrokeWidth: (value: number) => void;
+  setFillColor: (value: string) => void;
+  setStrokeColor: (value: string) => void;
+  setStrokeWidth: (value: number) => void;
   // setFontFamily: (value: string) => void;
 };
 
@@ -245,9 +245,9 @@ export interface Editor {
   // changeOpacity: (value: number) => void;
   // bringForward: () => void;
   // sendBackwards: () => void;
-  // changeStrokeWidth: (value: number) => void;
-  // changeFillColor: (value: string) => void;
-  // changeStrokeColor: (value: string) => void;
+  changeStrokeWidth: (value: number) => void;
+  changeFillColor: (value: string) => void;
+  changeStrokeColor: (value: string) => void;
   // changeStrokeDashArray: (value: number[]) => void;
   addCircle: () => void;
   addSoftRectangle: () => void;
@@ -255,10 +255,13 @@ export interface Editor {
   addTriangle: () => void;
   addInverseTriangle: () => void;
   addDiamond: () => void;
-  // canvas: fabric.Canvas;
+  canvas: fabric.Canvas;
+  fillColor: string;
+  strokeColor: string;
+  strokeWidth: number;
   // getActiveFillColor: () => string;
   // getActiveStrokeColor: () => string;
   // getActiveStrokeWidth: () => number;
   // getActiveStrokeDashArray: () => number[];
-  // selectedObjects: fabric.Object[];
+  selectedObjects: fabric.Object[];
 }
