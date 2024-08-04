@@ -5,13 +5,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useEditor } from "@/features/editor/hooks/use-editor";
 import { ActiveTool, selectionDependentTools } from "../types";
+import { FillColorSidebar } from "./fill-color-sidebar";
 import { Footer } from "./footer";
 import { Navbar } from "./navbar";
-import { Sidebar } from "./sidebar";
-import { Toolbar } from "./toolbar";
 import { ShapeSidebar } from "./shape-sidebar";
-import { FillColorSidebar } from "./fill-color-sidebar";
+import { Sidebar } from "./sidebar";
 import { StrokeColorSidebar } from "./stroke-color-sidebar";
+import { StrokeWidthSidebar } from "./stroke-width-sidebar";
+import { Toolbar } from "./toolbar";
 
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -83,6 +84,11 @@ export const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <StrokeColorSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <StrokeWidthSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

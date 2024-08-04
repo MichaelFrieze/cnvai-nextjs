@@ -194,9 +194,9 @@ export type BuildEditorProps = {
   strokeColor: string;
   strokeWidth: number;
   selectedObjects: fabric.Object[];
-  // strokeDashArray: number[];
+  strokeDashArray: number[];
   // fontFamily: string;
-  // setStrokeDashArray: (value: number[]) => void;
+  setStrokeDashArray: (value: number[]) => void;
   setFillColor: (value: string) => void;
   setStrokeColor: (value: string) => void;
   setStrokeWidth: (value: number) => void;
@@ -248,7 +248,7 @@ export interface Editor {
   changeStrokeWidth: (value: number) => void;
   changeFillColor: (value: string) => void;
   changeStrokeColor: (value: string) => void;
-  // changeStrokeDashArray: (value: number[]) => void;
+  changeStrokeDashArray: (value: number[]) => void;
   addCircle: () => void;
   addSoftRectangle: () => void;
   addRectangle: () => void;
@@ -256,10 +256,9 @@ export interface Editor {
   addInverseTriangle: () => void;
   addDiamond: () => void;
   canvas: fabric.Canvas;
-  strokeWidth: number;
   getActiveFillColor: () => string;
   getActiveStrokeColor: () => string;
-  // getActiveStrokeWidth: () => number;
-  // getActiveStrokeDashArray: () => number[];
+  getActiveStrokeWidth: () => number;
+  getActiveStrokeDashArray: () => number[];
   selectedObjects: fabric.Object[];
 }
