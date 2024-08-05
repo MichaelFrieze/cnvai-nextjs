@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useEditor } from "@/features/editor/hooks/use-editor";
 import { ActiveTool, selectionDependentTools } from "../types";
 import { FillColorSidebar } from "./fill-color-sidebar";
+import { FontSidebar } from "./font-sidebar";
 import { Footer } from "./footer";
 import { Navbar } from "./navbar";
 import { OpacitySidebar } from "./opacity-sidebar";
@@ -101,6 +102,11 @@ export const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <TextSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <FontSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
