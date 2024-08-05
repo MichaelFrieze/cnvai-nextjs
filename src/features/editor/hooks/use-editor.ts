@@ -12,6 +12,7 @@ import {
   STROKE_WIDTH,
   STROKE_DASH_ARRAY,
   TRIANGLE_OPTIONS,
+  TEXT_OPTIONS,
 } from "@/features/editor/types";
 
 import { useCallback, useMemo, useState } from "react";
@@ -52,6 +53,15 @@ const buildEditor = ({
   };
 
   return {
+    addText: (value, options) => {
+      const object = new fabric.Textbox(value, {
+        ...TEXT_OPTIONS,
+        fill: fillColor,
+        ...options,
+      });
+
+      addToCanvas(object);
+    },
     getActiveOpacity: () => {
       const selectedObject = selectedObjects[0];
 
