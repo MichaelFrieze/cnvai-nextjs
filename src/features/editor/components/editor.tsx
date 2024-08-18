@@ -5,7 +5,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useEditor } from "@/features/editor/hooks/use-editor";
 import { ActiveTool, selectionDependentTools } from "../types";
+import { AiSidebar } from "./ai-sidebar";
 import { FillColorSidebar } from "./fill-color-sidebar";
+import { FilterSidebar } from "./filter-sidebar";
 import { FontSidebar } from "./font-sidebar";
 import { Footer } from "./footer";
 import { ImageSidebar } from "./image-sidebar";
@@ -17,7 +19,6 @@ import { StrokeColorSidebar } from "./stroke-color-sidebar";
 import { StrokeWidthSidebar } from "./stroke-width-sidebar";
 import { TextSidebar } from "./text-sidebar";
 import { Toolbar } from "./toolbar";
-import { FilterSidebar } from "./filter-sidebar";
 
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -119,6 +120,11 @@ export const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <FilterSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <AiSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
