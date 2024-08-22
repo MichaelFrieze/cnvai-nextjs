@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useEditor } from "@/features/editor/hooks/use-editor";
 import { ActiveTool, selectionDependentTools } from "../types";
 import { AiSidebar } from "./ai-sidebar";
+import { DrawSidebar } from "./draw-sidebar";
 import { FillColorSidebar } from "./fill-color-sidebar";
 import { FilterSidebar } from "./filter-sidebar";
 import { FontSidebar } from "./font-sidebar";
@@ -13,35 +14,16 @@ import { Footer } from "./footer";
 import { ImageSidebar } from "./image-sidebar";
 import { Navbar } from "./navbar";
 import { OpacitySidebar } from "./opacity-sidebar";
+import { RemoveBgSidebar } from "./remove-bg-sidebar";
 import { ShapeSidebar } from "./shape-sidebar";
 import { Sidebar } from "./sidebar";
 import { StrokeColorSidebar } from "./stroke-color-sidebar";
 import { StrokeWidthSidebar } from "./stroke-width-sidebar";
 import { TextSidebar } from "./text-sidebar";
 import { Toolbar } from "./toolbar";
-import { RemoveBgSidebar } from "./remove-bg-sidebar";
 
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
-
-  const onChangeActiveTool = useCallback(
-    (tool: ActiveTool) => {
-      if (tool === "draw") {
-        // TODO: enable draw mode
-      }
-
-      if (activeTool === "draw") {
-        // TODO: disable draw mode
-      }
-
-      if (tool === activeTool) {
-        return setActiveTool("select");
-      }
-
-      setActiveTool(tool);
-    },
-    [activeTool],
-  );
 
   const onClearSelection = useCallback(() => {
     if (selectionDependentTools.includes(activeTool)) {
@@ -52,6 +34,25 @@ export const Editor = () => {
   const { init, editor } = useEditor({
     clearSelectionCallback: onClearSelection,
   });
+
+  const onChangeActiveTool = useCallback(
+    (tool: ActiveTool) => {
+      if (tool === "draw") {
+        editor?.enableDrawingMode();
+      }
+
+      if (activeTool === "draw") {
+        editor?.disableDrawingMode();
+      }
+
+      if (tool === activeTool) {
+        return setActiveTool("select");
+      }
+
+      setActiveTool(tool);
+    },
+    [activeTool, editor],
+  );
 
   const canvasRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -131,6 +132,11 @@ export const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <RemoveBgSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <DrawSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
