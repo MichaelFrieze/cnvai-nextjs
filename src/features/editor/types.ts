@@ -213,9 +213,9 @@ export interface Editor {
   // onRedo: () => void;
   // canUndo: () => boolean;
   // canRedo: () => boolean;
-  // autoZoom: () => void;
-  // zoomIn: () => void;
-  // zoomOut: () => void;
+  autoZoom: () => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
   getWorkspace: () => fabric.Object | undefined;
   changeBackground: (value: string) => void;
   changeSize: (value: { width: number; height: number }) => void;
