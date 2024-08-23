@@ -24,14 +24,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { ActiveTool } from "../types";
+import { ActiveTool, Editor } from "../types";
 
 interface NavbarProps {
+  editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
 }
 
-export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
+export const Navbar = ({
+  editor,
+  activeTool,
+  onChangeActiveTool,
+}: NavbarProps) => {
   return (
     <nav className="flex h-[68px] w-full items-center gap-x-8 border-b p-4 lg:pl-[34px]">
       <Logo />
@@ -71,20 +76,20 @@ export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
         </Hint>
         <Hint label="Undo" side="bottom" sideOffset={10}>
           <Button
-            // disabled={!editor?.canUndo()}
+            disabled={!editor?.canUndo()}
             variant="ghost"
             size="icon"
-            onClick={() => console.log("Undo")}
+            onClick={() => editor?.onUndo()}
           >
             <Undo2 className="size-4" />
           </Button>
         </Hint>
         <Hint label="Redo" side="bottom" sideOffset={10}>
           <Button
-            // disabled={!editor?.canRedo()}
+            disabled={!editor?.canRedo()}
             variant="ghost"
             size="icon"
-            onClick={() => console.log("Redo")}
+            onClick={() => editor?.onRedo()}
           >
             <Redo2 className="size-4" />
           </Button>
