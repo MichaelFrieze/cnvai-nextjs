@@ -15,6 +15,13 @@
       "when": 1725223564399,
       "tag": "0001_nebulous_robbie_robertson",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1725379691202,
+      "tag": "0002_parallel_blackheart",
+      "breakpoints": true
     }
   ]
 }

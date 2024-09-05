@@ -1,3 +1,5 @@
+import { relations } from "drizzle-orm";
+import { createInsertSchema } from "drizzle-zod";
 import {
   boolean,
   timestamp,
@@ -13,11 +15,15 @@ export const users = pgTable("user", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
-  email: text("email").unique(),
+  email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   password: text("password"),
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+  projects: many(projects),
+}));
 
 export const accounts = pgTable(
   "account",
@@ -85,3 +91,50 @@ export const authenticators = pgTable(
     }),
   }),
 );
+
+export const projects = pgTable("project", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, {
+      onDelete: "cascade",
+    }),
+  json: text("json").notNull(),
+  height: integer("height").notNull(),
+  width: integer("width").notNull(),
+  thumbnailUrl: text("thumbnailUrl"),
+  isTemplate: boolean("isTemplate"),
+  isPro: boolean("isPro"),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull(),
+});
+
+export const projectsRelations = relations(projects, ({ one }) => ({
+  user: one(users, {
+    fields: [projects.userId],
+    references: [users.id],
+  }),
+}));
+
+export const projectsInsertSchema = createInsertSchema(projects);
+
+export const subscriptions = pgTable("subscription", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, {
+      onDelete: "cascade",
+    }),
+  subscriptionId: text("subscriptionId").notNull(),
+  customerId: text("customerId").notNull(),
+  priceId: text("priceId").notNull(),
+  status: text("status").notNull(),
+  currentPeriodEnd: timestamp("currentPeriodEnd", { mode: "date" }),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull(),
+});
