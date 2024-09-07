@@ -19,7 +19,7 @@ import {
   TRIANGLE_OPTIONS,
 } from "@/features/editor/types";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   createFilter,
   downloadFile,
@@ -31,6 +31,7 @@ import { useCanvasEvents } from "./use-canvas-events";
 import { useClipboard } from "./use-clipboard";
 import { useHistory } from "./use-history";
 import { useHotkeys } from "./use-hotkeys";
+import { useLoadState } from "./use-load-state";
 import { useWindowEvents } from "./use-window-events";
 
 const buildEditor = ({
@@ -599,9 +600,16 @@ const buildEditor = ({
 };
 
 export const useEditor = ({
+  defaultState,
+  defaultHeight,
+  defaultWidth,
   clearSelectionCallback,
   saveCallback,
 }: EditorHookProps) => {
+  const initialState = useRef(defaultState);
+  const initialWidth = useRef(defaultWidth);
+  const initialHeight = useRef(defaultHeight);
+
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
@@ -642,6 +650,14 @@ export const useEditor = ({
     paste,
     save,
     canvas,
+  });
+
+  useLoadState({
+    canvas,
+    autoZoom,
+    initialState,
+    canvasHistory,
+    setHistoryIndex,
   });
 
   const editor = useMemo(() => {
@@ -708,14 +724,14 @@ export const useEditor = ({
       });
 
       const initialWorkspace = new fabric.Rect({
-        width: 900,
-        height: 1200,
+        width: initialWidth.current,
+        height: initialHeight.current,
         name: "clip",
         fill: "white",
         selectable: false,
         hasControls: false,
         shadow: new fabric.Shadow({
-          color: "rgba(0, 0, 0, 0.8)",
+          color: "rgba(0,0,0,0.8)",
           blur: 5,
         }),
       });
