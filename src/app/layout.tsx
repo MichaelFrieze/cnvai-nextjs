@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 
 import { auth } from "@/auth";
+import { Modals } from "@/components/modals";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "@/components/providers";
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
         <body className={inter.className}>
           <Providers>
             <Toaster />
+            <Modals />
             {children}
           </Providers>
         </body>
