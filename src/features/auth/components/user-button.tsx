@@ -11,9 +11,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
+import { useBilling } from "@/features/subscriptions/api/use-billing";
 
 export const UserButton = () => {
+  const { shouldBlock, triggerPaywall, isLoading } = usePaywall();
+  const mutation = useBilling();
   const session = useSession();
+
+  const onClick = () => {
+    if (shouldBlock) {
+      triggerPaywall();
+      return;
+    }
+
+    mutation.mutate();
+  };
 
   if (session.status === "loading") {
     return <Loader className="size-4 animate-spin text-muted-foreground" />;
@@ -29,13 +42,13 @@ export const UserButton = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="relative outline-none">
-        {/* {!shouldBlock && !isLoading && (
+        {!shouldBlock && !isLoading && (
           <div className="absolute -left-1 -top-1 z-10 flex items-center justify-center">
             <div className="flex items-center justify-center rounded-full bg-white p-1 drop-shadow-sm">
               <Crown className="size-3 fill-yellow-500 text-yellow-500" />
             </div>
           </div>
-        )} */}
+        )}
         <Avatar className="hover:opcaity-75 size-10 transition">
           <AvatarImage alt={name} src={imageUrl || ""} />
           <AvatarFallback className="flex items-center justify-center bg-blue-500 font-medium text-white">
@@ -45,8 +58,8 @@ export const UserButton = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-60">
         <DropdownMenuItem
-          // disabled={mutation.isPending}
-          // onClick={onClick}
+          disabled={mutation.isPending}
+          onClick={onClick}
           className="h-10"
         >
           <CreditCard className="mr-2 size-4" />

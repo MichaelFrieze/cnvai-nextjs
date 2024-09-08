@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 
+import { SubscriptionAlert } from "@/features/subscriptions/components/subscription-alert";
+
 import { auth } from "@/auth";
 import { Modals } from "@/components/modals";
 import { Toaster } from "@/components/ui/sonner";
@@ -30,6 +32,7 @@ export default async function RootLayout({
           <Providers>
             <Toaster />
             <Modals />
+            <SubscriptionAlert />
             {children}
           </Providers>
         </body>

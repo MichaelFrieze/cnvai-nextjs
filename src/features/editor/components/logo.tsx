@@ -8,7 +8,7 @@ export const Logo = () => {
         <Image
           src="/logo.svg"
           fill
-          alt="Image AI"
+          alt="CnvAI"
           className="shrink-0 transition hover:opacity-75"
         />
       </div>
