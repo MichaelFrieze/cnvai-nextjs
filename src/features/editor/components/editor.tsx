@@ -1,32 +1,32 @@
 "use client";
 
 import { fabric } from "fabric";
+import debounce from "lodash.debounce";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ResponseType } from "@/features/projects/api/use-get-project";
-
-import { useEditor } from "@/features/editor/hooks/use-editor";
 import { useUpdateProject } from "@/features/projects/api/use-update-project";
-import debounce from "lodash.debounce";
-import { ActiveTool, selectionDependentTools } from "../types";
-import { AiSidebar } from "./ai-sidebar";
-import { DrawSidebar } from "./draw-sidebar";
-import { FillColorSidebar } from "./fill-color-sidebar";
-import { FilterSidebar } from "./filter-sidebar";
-import { FontSidebar } from "./font-sidebar";
-import { Footer } from "./footer";
-import { ImageSidebar } from "./image-sidebar";
-import { Navbar } from "./navbar";
-import { OpacitySidebar } from "./opacity-sidebar";
-import { RemoveBgSidebar } from "./remove-bg-sidebar";
-import { SettingsSidebar } from "./settings-sidebar";
-import { ShapeSidebar } from "./shape-sidebar";
-import { Sidebar } from "./sidebar";
-import { StrokeColorSidebar } from "./stroke-color-sidebar";
-import { StrokeWidthSidebar } from "./stroke-width-sidebar";
-import { TemplateSidebar } from "./template-sidebar";
-import { TextSidebar } from "./text-sidebar";
-import { Toolbar } from "./toolbar";
+
+import { ActiveTool, selectionDependentTools } from "@/features/editor/types";
+import { Navbar } from "@/features/editor/components/navbar";
+import { Footer } from "@/features/editor/components/footer";
+import { useEditor } from "@/features/editor/hooks/use-editor";
+import { Sidebar } from "@/features/editor/components/sidebar";
+import { Toolbar } from "@/features/editor/components/toolbar";
+import { ShapeSidebar } from "@/features/editor/components/shape-sidebar";
+import { FillColorSidebar } from "@/features/editor/components/fill-color-sidebar";
+import { StrokeColorSidebar } from "@/features/editor/components/stroke-color-sidebar";
+import { StrokeWidthSidebar } from "@/features/editor/components/stroke-width-sidebar";
+import { OpacitySidebar } from "@/features/editor/components/opacity-sidebar";
+import { TextSidebar } from "@/features/editor/components/text-sidebar";
+import { FontSidebar } from "@/features/editor/components/font-sidebar";
+import { ImageSidebar } from "@/features/editor/components/image-sidebar";
+import { FilterSidebar } from "@/features/editor/components/filter-sidebar";
+import { DrawSidebar } from "@/features/editor/components/draw-sidebar";
+import { AiSidebar } from "@/features/editor/components/ai-sidebar";
+import { TemplateSidebar } from "@/features/editor/components/template-sidebar";
+import { RemoveBgSidebar } from "@/features/editor/components/remove-bg-sidebar";
+import { SettingsSidebar } from "@/features/editor/components/settings-sidebar";
 
 interface EditorProps {
   initialData: ResponseType["data"];

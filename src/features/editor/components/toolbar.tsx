@@ -1,33 +1,33 @@
-"use client";
+import { useState } from "react";
 
-import { BsBorderWidth } from "react-icons/bs";
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa";
-import { RxTransparencyGrid } from "react-icons/rx";
 import { TbColorFilter } from "react-icons/tb";
+import { BsBorderWidth } from "react-icons/bs";
+import { RxTransparencyGrid } from "react-icons/rx";
+import {
+  ArrowUp,
+  ArrowDown,
+  ChevronDown,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Trash,
+  SquareSplitHorizontal,
+  Copy,
+} from "lucide-react";
 
-import { Hint } from "@/components/hint";
-import { Button } from "@/components/ui/button";
+import { isTextType } from "@/features/editor/utils";
+import { FontSizeInput } from "@/features/editor/components/font-size-input";
 import {
   ActiveTool,
   Editor,
   FONT_SIZE,
   FONT_WEIGHT,
 } from "@/features/editor/types";
+
 import { cn } from "@/lib/utils";
-import {
-  AlignCenter,
-  AlignLeft,
-  AlignRight,
-  ArrowDown,
-  ArrowUp,
-  ChevronDown,
-  Copy,
-  SquareSplitHorizontal,
-  Trash,
-} from "lucide-react";
-import { useState } from "react";
-import { isTextType } from "../utils";
-import { FontSizeInput } from "./font-size-input";
+import { Hint } from "@/components/hint";
+import { Button } from "@/components/ui/button";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -174,7 +174,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {!isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Stroke color" side="bottom" sideOffset={5}>
@@ -192,7 +191,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {!isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Stroke width" side="bottom" sideOffset={5}>
@@ -207,7 +205,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Font" side="bottom" sideOffset={5}>
@@ -228,7 +225,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Bold" side="bottom" sideOffset={5}>
@@ -243,7 +239,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Italic" side="bottom" sideOffset={5}>
@@ -258,7 +253,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Underline" side="bottom" sideOffset={5}>
@@ -273,7 +267,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Strike" side="bottom" sideOffset={5}>
@@ -288,7 +281,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isText && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Align left" side="bottom" sideOffset={5}>
@@ -331,7 +323,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isText && (
         <div className="flex h-full items-center justify-center">
           <FontSizeInput
@@ -340,7 +331,6 @@ export const Toolbar = ({
           />
         </div>
       )}
-
       {isImage && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Filters" side="bottom" sideOffset={5}>
@@ -355,7 +345,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       {isImage && (
         <div className="flex h-full items-center justify-center">
           <Hint label="Remove background" side="bottom" sideOffset={5}>
@@ -370,7 +359,6 @@ export const Toolbar = ({
           </Hint>
         </div>
       )}
-
       <div className="flex h-full items-center justify-center">
         <Hint label="Bring forward" side="bottom" sideOffset={5}>
           <Button
@@ -382,7 +370,6 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
-
       <div className="flex h-full items-center justify-center">
         <Hint label="Send backwards" side="bottom" sideOffset={5}>
           <Button
@@ -394,7 +381,6 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
-
       <div className="flex h-full items-center justify-center">
         <Hint label="Opacity" side="bottom" sideOffset={5}>
           <Button
@@ -407,7 +393,6 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
-
       <div className="flex h-full items-center justify-center">
         <Hint label="Duplicate" side="bottom" sideOffset={5}>
           <Button
@@ -422,7 +407,6 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
-
       <div className="flex h-full items-center justify-center">
         <Hint label="Delete" side="bottom" sideOffset={5}>
           <Button onClick={() => editor?.delete()} size="icon" variant="ghost">

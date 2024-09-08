@@ -1,45 +1,44 @@
 import { fabric } from "fabric";
+import { useCallback, useState, useMemo, useRef } from "react";
 
 import {
-  BuildEditorProps,
+  Editor,
+  FILL_COLOR,
+  STROKE_WIDTH,
+  STROKE_COLOR,
   CIRCLE_OPTIONS,
   DIAMOND_OPTIONS,
-  Editor,
-  EditorHookProps,
-  FILL_COLOR,
-  FONT_FAMILY,
-  FONT_SIZE,
-  FONT_WEIGHT,
-  JSON_KEYS,
-  RECTANGLE_OPTIONS,
-  STROKE_COLOR,
-  STROKE_DASH_ARRAY,
-  STROKE_WIDTH,
-  TEXT_OPTIONS,
   TRIANGLE_OPTIONS,
+  BuildEditorProps,
+  RECTANGLE_OPTIONS,
+  EditorHookProps,
+  STROKE_DASH_ARRAY,
+  TEXT_OPTIONS,
+  FONT_FAMILY,
+  FONT_WEIGHT,
+  FONT_SIZE,
+  JSON_KEYS,
 } from "@/features/editor/types";
-
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useHistory } from "@/features/editor/hooks/use-history";
 import {
   createFilter,
   downloadFile,
   isTextType,
   transformText,
-} from "../utils";
-import { useAutoResize } from "./use-auto-resize";
-import { useCanvasEvents } from "./use-canvas-events";
-import { useClipboard } from "./use-clipboard";
-import { useHistory } from "./use-history";
-import { useHotkeys } from "./use-hotkeys";
-import { useLoadState } from "./use-load-state";
-import { useWindowEvents } from "./use-window-events";
+} from "@/features/editor/utils";
+import { useHotkeys } from "@/features/editor/hooks/use-hotkeys";
+import { useClipboard } from "@/features/editor/hooks//use-clipboard";
+import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
+import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
+import { useWindowEvents } from "@/features/editor/hooks/use-window-events";
+import { useLoadState } from "@/features/editor/hooks/use-load-state";
 
 const buildEditor = ({
   save,
   undo,
   redo,
-  canUndo,
   canRedo,
+  canUndo,
   autoZoom,
   copy,
   paste,
@@ -144,10 +143,10 @@ const buildEditor = ({
     saveSvg,
     saveJson,
     loadJson,
-    autoZoom,
-    getWorkspace,
     canUndo,
     canRedo,
+    autoZoom,
+    getWorkspace,
     zoomIn: () => {
       let zoomRatio = canvas.getZoom();
       zoomRatio += 0.05;
@@ -170,6 +169,7 @@ const buildEditor = ({
       const workspace = getWorkspace();
 
       workspace?.set(value);
+      autoZoom();
       save();
     },
     changeBackground: (value: string) => {
@@ -452,6 +452,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
         strokeDashArray: strokeDashArray,
       });
+
       addToCanvas(object);
     },
     addSoftRectangle: () => {
@@ -464,6 +465,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
         strokeDashArray: strokeDashArray,
       });
+
       addToCanvas(object);
     },
     addRectangle: () => {
@@ -474,6 +476,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
         strokeDashArray: strokeDashArray,
       });
+
       addToCanvas(object);
     },
     addTriangle: () => {
@@ -484,6 +487,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
         strokeDashArray: strokeDashArray,
       });
+
       addToCanvas(object);
     },
     addInverseTriangle: () => {
@@ -504,6 +508,7 @@ const buildEditor = ({
           strokeDashArray: strokeDashArray,
         },
       );
+
       addToCanvas(object);
     },
     addDiamond: () => {
@@ -557,7 +562,9 @@ const buildEditor = ({
     getActiveFillColor: () => {
       const selectedObject = selectedObjects[0];
 
-      if (!selectedObject) return fillColor;
+      if (!selectedObject) {
+        return fillColor;
+      }
 
       const value = selectedObject.get("fill") || fillColor;
 
@@ -567,7 +574,9 @@ const buildEditor = ({
     getActiveStrokeColor: () => {
       const selectedObject = selectedObjects[0];
 
-      if (!selectedObject) return strokeColor;
+      if (!selectedObject) {
+        return strokeColor;
+      }
 
       const value = selectedObject.get("stroke") || strokeColor;
 
@@ -675,12 +684,12 @@ export const useEditor = ({
         fillColor,
         strokeWidth,
         strokeColor,
-        strokeDashArray,
-        setStrokeDashArray,
         setFillColor,
         setStrokeColor,
         setStrokeWidth,
+        strokeDashArray,
         selectedObjects,
+        setStrokeDashArray,
         fontFamily,
         setFontFamily,
       });
@@ -688,18 +697,18 @@ export const useEditor = ({
 
     return undefined;
   }, [
-    save,
+    canRedo,
+    canUndo,
     undo,
     redo,
-    canUndo,
-    canRedo,
+    save,
     autoZoom,
     copy,
     paste,
     canvas,
     fillColor,
-    strokeColor,
     strokeWidth,
+    strokeColor,
     selectedObjects,
     strokeDashArray,
     fontFamily,
@@ -714,7 +723,7 @@ export const useEditor = ({
       initialContainer: HTMLDivElement;
     }) => {
       fabric.Object.prototype.set({
-        cornerColor: "#fff",
+        cornerColor: "#FFF",
         cornerStyle: "circle",
         borderColor: "#3b82f6",
         borderScaleFactor: 1.5,
@@ -756,8 +765,5 @@ export const useEditor = ({
     ],
   );
 
-  return {
-    init,
-    editor,
-  };
+  return { init, editor };
 };
