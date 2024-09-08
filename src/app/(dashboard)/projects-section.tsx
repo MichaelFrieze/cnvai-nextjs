@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
+import { useDeleteProject } from "@/features/projects/api/use-delete-project";
 import { useDuplicateProject } from "@/features/projects/api/use-duplicate-project";
 
 import {
@@ -24,14 +25,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Table, TableRow, TableBody, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { useConfirm } from "@/hooks/use-confirm";
 
 export const ProjectsSection = () => {
+  const [ConfirmDialog, confirm] = useConfirm(
+    "Are you sure?",
+    "You are about to delete this project.",
+  );
   const duplicateMutation = useDuplicateProject();
-
+  const removeMutation = useDeleteProject();
   const router = useRouter();
 
   const onCopy = (id: string) => {
     duplicateMutation.mutate({ id });
+  };
+
+  const onDelete = async (id: string) => {
+    const ok = await confirm();
+
+    if (ok) {
+      removeMutation.mutate({ id });
+    }
   };
 
   const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } =
@@ -76,6 +90,7 @@ export const ProjectsSection = () => {
 
   return (
     <div className="space-y-4">
+      <ConfirmDialog />
       <h3 className="text-lg font-semibold">Recent projects</h3>
       <Table>
         <TableBody>
@@ -122,8 +137,8 @@ export const ProjectsSection = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="h-10 cursor-pointer"
-                          // disabled={removeMutation.isPending}
-                          onClick={() => console.log("delete")}
+                          disabled={removeMutation.isPending}
+                          onClick={() => onDelete(project.id)}
                         >
                           <Trash className="mr-2 size-4" />
                           Delete
