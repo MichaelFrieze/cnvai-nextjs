@@ -7,6 +7,7 @@ import { ResponseType } from "@/features/projects/api/use-get-project";
 
 import { useEditor } from "@/features/editor/hooks/use-editor";
 import { useUpdateProject } from "@/features/projects/api/use-update-project";
+import debounce from "lodash.debounce";
 import { ActiveTool, selectionDependentTools } from "../types";
 import { AiSidebar } from "./ai-sidebar";
 import { DrawSidebar } from "./draw-sidebar";
@@ -23,9 +24,9 @@ import { ShapeSidebar } from "./shape-sidebar";
 import { Sidebar } from "./sidebar";
 import { StrokeColorSidebar } from "./stroke-color-sidebar";
 import { StrokeWidthSidebar } from "./stroke-width-sidebar";
+import { TemplateSidebar } from "./template-sidebar";
 import { TextSidebar } from "./text-sidebar";
 import { Toolbar } from "./toolbar";
-import debounce from "lodash.debounce";
 
 interface EditorProps {
   initialData: ResponseType["data"];
@@ -145,6 +146,11 @@ export const Editor = ({ initialData }: EditorProps) => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <ImageSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <TemplateSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
