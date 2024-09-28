@@ -79,9 +79,14 @@ export const ImageSidebar = ({
                     key={image.id}
                     className="group relative h-[100px] w-full overflow-hidden rounded-sm border bg-muted transition hover:opacity-75"
                   >
-                    <Image
+                    {/* <Image
                       fill
                       src={image.urls.small}
+                      alt={image.alt_description || "Image"}
+                      className="object-cover"
+                    /> */}
+                    <img
+                      src={image.urls.regular}
                       alt={image.alt_description || "Image"}
                       className="object-cover"
                     />
